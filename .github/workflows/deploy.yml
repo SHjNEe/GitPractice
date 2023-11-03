@@ -1,20 +1,39 @@
 name: Deploy Website
+
+# Define when this workflow should be triggered (on push to 'main' branch).
 on:
   push:
     branches:
       - main
+
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - name: Get code
         uses: actions/checkout@v3
+        # Lấy mã nguồn từ nhánh 'main' của kho lưu trữ
+
+      - name: Cache
+        uses: actions/cache@v3
+        with:
+          # Đây nên chỉ định đường dẫn của các tệp hoặc thư mục bạn muốn lưu trữ trong cache
+          path: ~/.npm
+          key: deps-node-modules-${{ hasFiles('**/package-lock.json') }}
+          # Cố gắng lưu trữ tệp hoặc dự án để tăng tốc độ quy trình CI/CD trong các lần chạy tiếp theo
+
       - name: Install dependencies
         run: npm ci
+        # Cài đặt các phụ thuộc cần thiết cho dự án
+
       - name: Lint code
         run: npm run lint
+        # Kiểm tra mã nguồn để đảm bảo tuân thủ mã hóa và chuẩn mã nguồn
+
       - name: Test code
         run: npm run test
+        # Thực hiện các bài kiểm tra để đảm bảo tính ổn định của mã nguồn
+
   build:
     needs: test
     runs-on: ubuntu-latest
@@ -23,22 +42,33 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v3
+        # Lấy mã nguồn từ nhánh 'main' của kho lưu trữ
+        # with:
+        #   ref: main
+
       - name: Install dependencies
         run: npm ci
+        # Cài đặt các phụ thuộc cần thiết cho dự án
+
       - name: Build website
         run: npm run build
+        # Tạo phiên bản cuối cùng của trang web
+
       - name: Publish JS filename
         id: publish
         run: find dist/assets/*.js -type f -execdir echo 'script-file={}' >> $GITHUB_OUTPUT ';'
+        # Tìm tệp JavaScript trong thư mục 'dist/assets' và ghi thông tin về chúng vào biến $GITHUB_OUTPUT
+        # Có thể dùng để lưu trữ thông tin về các tệp JavaScript được tạo ra trong quá trình xây dựng
+
       # Store in artifact
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
           name: dist-files
           path: dist
-          # path: |
-          #   dist
-          #   package.json
+          # Lưu trữ các tệp trong thư mục 'dist' dưới dạng artifact
+          # Có thể được sử dụng trong quá trình triển khai sau này
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -47,9 +77,16 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: dist-files
+        # Tải xuống artifact đã được lưu trữ trong công việc "build"
+
       - name: Output contents
         run: ls
+        # Liệt kê nội dung của thư mục hiện tại
+
       - name: Output Filename
-        run: echo "${{ needs.build.outputs }}"
+        run: echo "${{ needs.build.outputs.script-file }}"
+        # Xuất thông tin về biến 'script-file' đã chuyển từ công việc "build"
+
       - name: Deploy
         run: echo "Done"
+        # Triển khai ứng dụng hoặc trang web sau khi quá trình xây dựng và kiểm tra hoàn thành
