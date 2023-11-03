@@ -45,3 +45,4 @@ jobs:
       - name: Output contents
         run: ls
       - name: Deploy
+        run: echo "Done"
