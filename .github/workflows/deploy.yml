@@ -19,7 +19,7 @@ jobs:
         with:
           # Đây nên chỉ định đường dẫn của các tệp hoặc thư mục bạn muốn lưu trữ trong cache
           path: ~/.npm
-          key: deps-node-modules-${{ hasFiles('**/package-lock.json') }}
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
           # Cố gắng lưu trữ tệp hoặc dự án để tăng tốc độ quy trình CI/CD trong các lần chạy tiếp theo
 
       - name: Install dependencies
