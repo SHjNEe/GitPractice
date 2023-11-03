@@ -1,4 +1,4 @@
-name: Events Demo 1
+name: Events Demo
 # on: [push, workflow_dispatch]
 on:
   push:
