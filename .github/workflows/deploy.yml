@@ -9,6 +9,7 @@ env:
   DB_PASSWORD: test
 jobs:
   test:
+    environment: testing
     env:
       DB_PASSWORD: test
     runs-on: ubuntu-latest
@@ -98,5 +99,7 @@ jobs:
         # Xuất thông tin về biến 'script-file' đã chuyển từ công việc "build"
 
       - name: Deploy
-        run: echo "${{ env.DB_PASSWORD }}"
+        run: |
+          echo "${{ env.DB_PASSWORD }}"
+          echo "${{ secret.DB_PASSWORD }}"
         # Triển khai ứng dụng hoặc trang web sau khi quá trình xây dựng và kiểm tra hoàn thành
