@@ -9,7 +9,6 @@ env:
   DB_PASSWORD: test
 jobs:
   test:
-    environment: testing
     env:
       DB_PASSWORD: test
     runs-on: ubuntu-latest
