@@ -5,9 +5,12 @@ on:
   push:
     branches:
       - main
-
+env:
+  DB_PASSWORD: test
 jobs:
   test:
+    env:
+      DB_PASSWORD: test
     runs-on: ubuntu-latest
     steps:
       - name: Get code
@@ -95,5 +98,5 @@ jobs:
         # Xuất thông tin về biến 'script-file' đã chuyển từ công việc "build"
 
       - name: Deploy
-        run: echo "Done"
+        run: echo "${{ env.DB_PASSWORD }}"
         # Triển khai ứng dụng hoặc trang web sau khi quá trình xây dựng và kiểm tra hoàn thành
