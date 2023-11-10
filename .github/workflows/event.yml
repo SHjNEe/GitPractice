@@ -1,36 +1,36 @@
 name: Events Demo
 # on: [push, workflow_dispatch]
-on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
-    branches:
-      - main
-      - "dev-*"
-      - "feat/**"
-    # branches: [ main, 'release/v[0-9].[0-9]' ]
-  pull_request:
-    types: [opened, edited]
-    branches:
-      - main
-      - "dev-*"
-      - "feat/**"
-    paths-ignore:
-      - ".github/workflow/*"
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Output event data
-        run: echo "${{ toJSON(github.event) }}"
-      - name: Get code
-        uses: actions/checkout@v3
-      - name: Install dependencies
-        run: npm ci
-      - name: Test code
-        run: npm run test
-      - name: Build code
-        run: npm run build
-      - name: Deploy project
-        run: echo "Deploying..."
+# on:
+#   push:
+#     branches:
+#       - main
+#   workflow_dispatch:
+#     branches:
+#       - main
+#       - "dev-*"
+#       - "feat/**"
+#     # branches: [ main, 'release/v[0-9].[0-9]' ]
+#   pull_request:
+#     types: [opened, edited]
+#     branches:
+#       - main
+#       - "dev-*"
+#       - "feat/**"
+#     paths-ignore:
+#       - ".github/workflow/*"
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Output event data
+#         run: echo "${{ toJSON(github.event) }}"
+#       - name: Get code
+#         uses: actions/checkout@v3
+#       - name: Install dependencies
+#         run: npm ci
+#       - name: Test code
+#         run: npm run test
+#       - name: Build code
+#         run: npm run build
+#       - name: Deploy project
+#         run: echo "Deploying..."
