@@ -2,7 +2,6 @@ name: Use Reusable Workflow
 on: workflow_dispatch
 jobs:
   build:
-    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Get code
