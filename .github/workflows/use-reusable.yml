@@ -26,14 +26,4 @@ jobs:
           path: dist
   deploy:
     needs: build
-    runs-on: ubuntu-latest
-    extends: ./.github/workflows/reusable.yml
-  report:
-    needs: [lint, deploy]
-    if: failure()
-    runs-on: ubuntu-latest
-    steps:
-      - name: Output information
-        run: |
-          echo "Something went wrong"
-          echo "${{ toJSON(github) }}"
+    uses: ./.github/workflows/reusable.yml
