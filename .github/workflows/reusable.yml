@@ -1,33 +1,33 @@
 name: Reusable Deploy
-on:
-  workflow_call:
-    inputs:
-      artifact-name:
-        description: The name of deployable artifact files
-        required: false
-        default: dist
-        type: string
-    # secrets:
-    #   some-secret:
-    #     required: true
-    outputs:
-      result:
-        description: The result of the deploy
-        value: ${{ jobs.deploy.outputs.outcome }}
-jobs:
-  deploy:
-    outputs:
-      outcome: ${{ steps.set-result.outputs.step-result }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get build artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: ${{ inputs.artifact-name }} # name: dist-files
-      - name: List file
-        run: ls
-      - name: Deploy
-        run: echo "Deploying..."
-      - name: Set output
-        id: set-result
-        run: echo "::set-output name=step-result::success"
+# on:
+#   workflow_call:
+#     inputs:
+#       artifact-name:
+#         description: The name of deployable artifact files
+#         required: false
+#         default: dist
+#         type: string
+#     # secrets:
+#     #   some-secret:
+#     #     required: true
+#     outputs:
+#       result:
+#         description: The result of the deploy
+#         value: ${{ jobs.deploy.outputs.outcome }}
+# jobs:
+#   deploy:
+#     outputs:
+#       outcome: ${{ steps.set-result.outputs.step-result }}
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Get build artifacts
+#         uses: actions/download-artifact@v3
+#         with:
+#           name: ${{ inputs.artifact-name }} # name: dist-files
+#       - name: List file
+#         run: ls
+#       - name: Deploy
+#         run: echo "Deploying..."
+#       - name: Set output
+#         id: set-result
+#         run: echo "::set-output name=step-result::success"
