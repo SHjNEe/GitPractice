@@ -20,7 +20,7 @@ jobs:
       #   run: npm ci
       #Use custom actions
       - name: Load & cache dependencies
-        uses: ./actions/cache-deps/action.yml
+        uses: ././github/actions/cache-deps/action.yml
       - name: Lint code
         run: npm run lint
   test:
@@ -29,7 +29,7 @@ jobs:
       - name: Get code
         uses: actions/checkout@v3
       - name: Load & cache dependencies
-        uses: ./actions/cache-deps/action.yml
+        uses: ././github/actions/cache-deps/action.yml
       - name: Test code
         id: run-tests
         run: npm run test
@@ -46,7 +46,7 @@ jobs:
       - name: Get code
         uses: actions/checkout@v3
       - name: Load & cache dependencies
-        uses: ./actions/cache-deps/action.yml
+        uses: ././github/actions/cache-deps/action.yml
       - name: Build website
         run: npm run build
       - name: Upload artifacts
