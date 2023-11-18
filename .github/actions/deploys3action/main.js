@@ -14,7 +14,8 @@ async function run() {
   await exec.exec(
     `aws s3 sync ${distFolder} ${s3Uri} --region ${bucketRegion}`
   );
-
+  const websiteUrl = `http://${bucketName}.s3-website-${bucketRegion}.amazonaws.com`;
+  core.setOutput("website-url", websiteUrl);
   // await exec.exec("aws", ["s3", "sync", distFolder, s3Uri]);
 
   // // Load AWS credentials and configure S3
