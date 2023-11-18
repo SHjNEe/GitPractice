@@ -70,16 +70,28 @@ jobs:
         with:
           name: dist-files
           path: ./dist
+      #   Deploy with javascrips
+      # - name: Deploy site
+      #   id: deployment
+      #   uses: ./.github/actions/deploys3javascripts
+      #   env:
+      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #   with:
+      #     bucket-name: github-actions-deploytos3
+      #     dist-folder: ./dist
+      #     bucket-region: "ap-southeast-1"
+
+      #   Deploy with docker
       - name: Deploy site
         id: deployment
-        uses: ./.github/actions/deploys3action
-        env:
+        uses: ./.github/actions/deploys3docker
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         with:
           bucket-name: github-actions-deploytos3
           dist-folder: ./dist
-          # bucket-region: "ap-southeast-1"
+          bucket-region: "ap-southeast-1"
       - name: Output Information
         run: |
           echo "Live URL: ${{ steps.deployment.outputs.website-url }}"
