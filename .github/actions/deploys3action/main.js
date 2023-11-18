@@ -10,12 +10,12 @@ async function run() {
   const bucketRegion = core.getInput("bucket-region", { required: true });
   const distFolder = core.getInput("dist-folder", { required: true });
   //Upload files
-  const s3Uri = `s3:://${bucketName}`;
+  const s3Uri = `s3://${bucketName}`;
   await exec.exec(
     `aws s3 sync ${distFolder} ${s3Uri} --region ${bucketRegion}`
   );
 
-  await exec.exec("aws", ["s3", "sync", distFolder, s3Uri]);
+  // await exec.exec("aws", ["s3", "sync", distFolder, s3Uri]);
 
   // // Load AWS credentials and configure S3
   // const s3 = new AWS.S3({
