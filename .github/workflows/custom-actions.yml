@@ -20,9 +20,12 @@ jobs:
       #   run: npm ci
       #Use custom actions
       - name: Load & cache dependencies
+        id: cache-deps
         uses: ././.github/actions/cache-deps
         with:
           caching: "false"
+      - name: Output Information
+        run: echo "Cached used? ${{ steps.cache-deps.outputs.uses-cache }}"
       - name: Lint code
         run: npm run lint
   test:
